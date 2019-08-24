@@ -6992,7 +6992,8 @@ static int pageInsertArray(
   while( 1 /*Exit by break*/ ){
     int sz, rc;
     u8 *pSlot;
-    sz = cachedCellSize(pCArray, i);
+    assert( pCArray->szCell[i]!=0 );
+    sz = pCArray->szCell[i];
     if( (aData[1]==0 && aData[2]==0) || (pSlot = pageFindSlot(pPg,sz,&rc))==0 ){
       if( (pData - pBegin)<sz ) return 1;
       pData -= sz;
@@ -7153,6 +7154,7 @@ static int editPage(
         memmove(&pCellptr[2], pCellptr, (nCell - iCell) * 2);
       }
       nCell++;
+      cachedCellSize(pCArray, iCell+iNew);
       if( pageInsertArray(
             pPg, pBegin, &pData, pCellptr,
             iCell+iNew, 1, pCArray
@@ -8561,6 +8563,9 @@ int sqlite3BtreeInsert(
   BtShared *pBt = p->pBt;
   unsigned char *oldCell;
   unsigned char *newCell = 0;
+
+static int nCall = 0;
+nCall++;
 
   assert( (flags & (BTREE_SAVEPOSITION|BTREE_APPEND))==flags );
 
