@@ -24,9 +24,9 @@ before_install:
 script:
 - mkdir -p build
 - cd build
-- cmake ${CMAKE_OPTIONS} -DCMAKE_CXX_FLAGS=${CXX_FLAGS} -DCMAKE_BUILD_TYPE=Release
-  -DBUILD_TESTS=ON -DTPCP_OPTIONS=${TPCP_OPTIONS} ..
-- make
+- ../configure
+- make && make sqlite3.c
+- cp sqlite3 sqlite3_${TPCP_OPTIONS}
 branches:
   only:
   - master
@@ -38,7 +38,7 @@ deploy:
   api_key:
     secure: S52UNs8KAcBroDHI5ctcDAhspsQ13UDeWOsPvrQM2xaUJe5TpfayxXmzywg6qB8fEjQ070mV1IS1RwsPxpqsjMG9ykMTbBrVeLAuqHvDxfV7sog5w6T2s39wiyMUzCyUfV/Y0CgygEQtVfWCesAvlYRsyAqpCtV36meXt8feMzURtXpmMrWemFuS332yDvQcQJ+eIxejsyNdabgeLzXE21RBnyP+mg9B01SEnTPyPRu9IV/x22y662rLXdPyFyAyQtMPyKGnW/ZMWbO8HURAkbLUOwoM07F+HaTWTGFQg3lyVbY9hgDD22bkWiyVW1CGqDyZpr8Ir1ASvFYFIA0RDNxWk3qa40YXoOyJ9KuDiJepE3i/6rbF0Xe8MV+6eJ1AMPL4uuDh7ueqEl3E/AJJYXx2AlKOcBhHy/zPIwW4KtE8D7j4PqSzZ9xy2/NcVRNoSaWeb4k8/c7Zdxss5eujNK7I7pmsfYvc+sV/l3Lnm5OEGXpRleIqx/o3xThqw204bpObtt9x2YmYM5caTI3lrC4eqiQrjbxi3G4RDbIp4M14Oe0FD2awmjqadgl4NtzhDRlZGySfi0eNYDDKM9BHBSFCHkTUiZKgJ5302Nzk2nokn/4DXDHISyNZiyJMijRYwE4mx/HauU+TAFkmdpeBjGkqS4ud380My5r7t0ezmAs=
   file_glob: true
-  file: final-exe/*
+  file: build/sqlite*
   skip_cleanup: true
   on:
     repo: tpcp-project/sqlite
