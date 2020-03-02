@@ -1,21 +1,90 @@
 language: cpp
 matrix:
   include:
-  - os: linux
+
+  # GCC Optimizations start
+  - name: Ubuntu with gcc on amd64 and -O0
+    os: linux
     dist: bionic
     compiler: gcc
     arch: amd64
-    env: TPCP_OPTIONS=amd64_linux_gcc
-  - os: linux
+    env: 
+      - TPCP_OPTIONS=amd64_linux_gcc_o0
+      - CXXFLAGS="-O0"
+
+  - name: Ubuntu with gcc on amd64 and -O1
+    os: linux
+    dist: bionic
+    compiler: gcc
+    arch: amd64
+    env: 
+      - TPCP_OPTIONS=amd64_linux_gcc_o1
+      - CXXFLAGS="-O1"
+
+  - name: Ubuntu with gcc on amd64 and -O2
+    os: linux
+    dist: bionic
+    compiler: gcc
+    arch: amd64
+    env: 
+      - TPCP_OPTIONS=amd64_linux_gcc_o2
+      - CXXFLAGS="-O2"
+
+  - name: Ubuntu with gcc on amd64 and -O3
+    os: linux
+    dist: bionic
+    compiler: gcc
+    arch: amd64
+    env: 
+      - TPCP_OPTIONS=amd64_linux_gcc_o3
+      - CXXFLAGS="-O3"
+  # end GCC optimizations 
+
+  # clang amd64 start
+  - name: Ubuntu with clang on amd64 and -O0
+    os: linux
     dist: bionic
     compiler: clang
     arch: amd64
-    env: TPCP_OPTIONS=amd64_linux_clang
-  - os: linux
+    env: 
+      - TPCP_OPTIONS=amd64_linux_clang_o0
+      - CXXFLAGS="-O0"
+
+  - name: Ubuntu with clang on amd64 and -O1
+    os: linux
     dist: bionic
-    compiler: gcc
-    arch: arm64
-    env: TPCP_OPTIONS=arm64_linux_gcc
+    compiler: clang
+    arch: amd64
+    env: 
+      - TPCP_OPTIONS=amd64_linux_clang_o1
+      - CXXFLAGS="-O1"
+
+  - name: Ubuntu with clang on amd64 and -O2
+    os: linux
+    dist: bionic
+    compiler: clang
+    arch: amd64
+    env: 
+      - TPCP_OPTIONS=amd64_linux_clang_o2
+      - CXXFLAGS="-O2"
+
+  - name: Ubuntu with clang on amd64 and -O3
+    os: linux
+    dist: bionic
+    compiler: clang
+    arch: amd64
+    env: 
+      - TPCP_OPTIONS=amd64_linux_clang_o3
+      - CXXFLAGS="-O3"
+    # end clang
+
+  # attempt a windows build
+  # - name: Windows with gcc on amd64 and -O3
+  #   os: windows
+  #   arch: amd64
+  #   env: 
+  #     - TPCP_OPTIONS=amd64_Windows_gcc_o3
+  #     - CXXFLAGS="-O3"
 before_install:
 - export CMAKE_OPTIONS=${CMAKE_OPTIONS}" "${ENV_CMAKE_OPTIONS}
 - export CXX_FLAGS=${CXX_FLAGS}" "${ENV_CXX_FLAGS}
