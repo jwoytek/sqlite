@@ -94,7 +94,8 @@ script:
 - mkdir -p build
 - cd build
 - ../configure
-- make && make sqlite3.c
+- make
+- make sqlite3.c
 - cp sqlite3 sqlite3_exe_${TPCP_OPTIONS}
 branches:
   only:
